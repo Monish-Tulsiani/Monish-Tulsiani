@@ -1,0 +1,7 @@
+1633598235811	Encapsulate field 'amount'
+1633598371105	Delete element
+1633598380338	Delete element
+1633599395287	Encapsulate field 'companyvalue'
+1633668778790	Rename type 'User'
+1633668829875	Rename type 'UserRepo'
+1633679288455	Rename resource 'application.properties'

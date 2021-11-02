@@ -1,0 +1,21 @@
+package com.RiskManagement.util;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+class JwtUtilTest {
+	@Autowired
+	JwtUtil util ;
+	
+	
+
+	@Test
+	void extractUsernametest() {
+		util.extractUsername("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhdGVjaGllIiwiZXhwIjoxNjM1ODYyMjQzLCJpYXQiOjE2MzU4MjYyNDN9.5uR6j5isjrYJWyNPCQ8cuHx6NFplvKGm7GUXfxt4PV0");
+		
+		
+	}
+
+}

@@ -1,0 +1,53 @@
+package com.RiskManagement.util;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+
+import java.util.Date;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
+@SpringBootTest
+class JwtUtilTest {
+	@Autowired
+	JwtUtil util ;
+	
+	
+
+	@Test
+	void extractUsernametest() {
+		
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhdGVjaGllIiwiZXhwIjoxNjM1ODYyMjQzLCJpYXQiOjE2MzU4MjYyNDN9.5uR6j5isjrYJWyNPCQ8cuHx6NFplvKGm7GUXfxt4PV0";
+		String username = util.extractUsername(token);
+		
+		assertEquals("javatechie",username);
+		
+		
+	}
+	@Test
+	void extractExpirationtest() {
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhdGVjaGllIiwiZXhwIjoxNjM1ODYyMjQzLCJpYXQiOjE2MzU4MjYyNDN9.5uR6j5isjrYJWyNPCQ8cuHx6NFplvKGm7GUXfxt4PV0";
+		
+        Date date = util.extractExpiration(token);
+    	System.out.println(date);
+    	date.toString();
+    	
+    	assertEquals("Tue Nov 02 19:40:43 IST 2021",date.toString());
+	
+	}
+	@Test
+	void generateTokentest() {
+		String token = util.generateToken("test1");
+		assertNotNull(token);
+		
+	}
+	@Test
+	void validateToken() {
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhdGVjaGllIiwiZXhwIjoxNjM1ODYyMjQzLCJpYXQiOjE2MzU4MjYyNDN9.5uR6j5isjrYJWyNPCQ8cuHx6NFplvKGm7GUXfxt4PV0";
+		boolean result = util.validateToken(token, null );
+		assertEquals(false,result);
+	}
+	
+
+}

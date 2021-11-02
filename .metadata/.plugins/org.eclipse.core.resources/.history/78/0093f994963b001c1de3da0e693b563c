@@ -1,0 +1,38 @@
+package com.RiskManagement.util;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+
+import java.util.Date;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+@SpringBootTest
+class JwtUtilTest {
+	@Autowired
+	JwtUtil util ;
+	
+	
+
+	@Test
+	void extractUsernametest() {
+		
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhdGVjaGllIiwiZXhwIjoxNjM1ODYyMjQzLCJpYXQiOjE2MzU4MjYyNDN9.5uR6j5isjrYJWyNPCQ8cuHx6NFplvKGm7GUXfxt4PV0";
+		String username = util.extractUsername(token);
+		
+		assertEquals("javatechie",username);
+		
+		
+	}
+	@Test
+	void extractExpirationtest() {
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhdGVjaGllIiwiZXhwIjoxNjM1ODYyMjQzLCJpYXQiOjE2MzU4MjYyNDN9.5uR6j5isjrYJWyNPCQ8cuHx6NFplvKGm7GUXfxt4PV0";
+		System.out.println(util.extractExpiration(token));
+        Date Date = util.extractExpiration(token);
+    	System.out.println(Date);
+        
+	
+	}
+	
+
+}

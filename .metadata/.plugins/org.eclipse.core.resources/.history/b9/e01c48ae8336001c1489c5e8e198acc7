@@ -1,0 +1,5 @@
+package com.RiskManagement.services;
+
+public class EmailService {
+
+}

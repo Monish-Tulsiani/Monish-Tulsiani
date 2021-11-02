@@ -1,0 +1,98 @@
+package com.RiskManagement.controller;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
+
+import com.RiskManagement.entities.Applications;
+import com.RiskManagement.entities.JwtResponse;
+import com.RiskManagement.entities.JwtResponseGetApplication;
+import com.RiskManagement.entities.User;
+import com.RiskManagement.services.services;
+@SpringBootTest
+class MycontrollerTest {
+	@Autowired
+	Mycontroller controller;
+    @MockBean
+    services serve;
+    
+    
+	@Test
+	void addapplicationtest() {
+		JwtResponse jwtresponse = new JwtResponse();
+	    Applications application = new Applications();
+		application.setCid(101);
+		application.setAmount(20000);
+		application.setCompanyvalue(82222);
+		application.setCreditvalue(8);
+		application.setEmailid("abs@xyz.com");
+		application.setName("abs");
+		application.setTurnover(3555);
+		when(serve.addapplication(application)).thenReturn(application);
+		when(serve.loansenctioned(101, 20000)).thenReturn("the amount is too small according to policies");
+		jwtresponse.setMessage("the amount is too small according to policies");
+		ResponseEntity<JwtResponse> result =  controller.addapplication(application);
+		String String = result.getBody().getMessage();
+		assertEquals(jwtresponse.getMessage(),String);
+		
+	}
+	@Test
+	void reviewapplicationtest() {
+		JwtResponseGetApplication jwtresponse1 = new JwtResponseGetApplication();
+	    Applications application = new Applications();
+		application.setCid(101);
+		application.setAmount(20000);
+		application.setCompanyvalue(82222);
+		application.setCreditvalue(8);
+		application.setEmailid("abs@xyz.com");
+		application.setName("abs");
+		application.setTurnover(3555);
+		jwtresponse1.setAppli(application);
+		jwtresponse1.setMessage("application exist");
+		jwtresponse1.setResult("success");
+		when(serve.getapplication(101)).thenReturn(jwtresponse1);
+		JwtResponseGetApplication result = controller.getuser(101);
+		assertEquals(jwtresponse1.getResult(),result.getResult());
+		
+		
+		
+	}
+	@Test
+	void changepasswordtest() {
+		JwtResponse jwtresponse = new JwtResponse();
+		User user = new User();
+		user.setId(101);
+		user.setEmail("abc@xyz.com");
+		user.setUserName("abc");
+		user.setPassword("hhh");
+		jwtresponse.setResult("success");
+		jwtresponse.setMessage("password changed successfully");
+		when(serve.changepassword("abc", "hhh", "kkk")).thenReturn(jwtresponse);
+		ResponseEntity<JwtResponse> result =  controller.changepassword("abc", "hhh", "kkk");
+		String String = result.getBody().getMessage();
+		assertEquals(jwtresponse.getMessage(),String);
+	}
+	@Test
+	void forgetpasswordtest() {
+		JwtResponse jwtresponse = new JwtResponse();
+		User user = new User();
+		user.setId(101);
+		user.setEmail("abc@xyz.com");
+		user.setUserName("abc");
+		user.setPassword("hhh");
+		jwtresponse.setResult("success");
+		jwtresponse.setMessage("password changed successfully");
+		when(serve.forgetpassword(101, "abc", "kkk")).thenReturn(jwtresponse);
+		ResponseEntity<JwtResponse> result =  controller.forgetpassword(101, "abc", "kkk");
+		String String = result.getBody().getMessage();
+		assertEquals(jwtresponse.getMessage(),String);
+		
+	}
+
+}

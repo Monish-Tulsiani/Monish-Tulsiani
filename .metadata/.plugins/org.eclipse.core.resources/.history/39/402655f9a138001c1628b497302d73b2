@@ -1,0 +1,102 @@
+package com.RiskManagement.services;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.RiskManagement.dao.ApplicationsRepo;
+import com.RiskManagement.dao.UserRepository;
+import com.RiskManagement.entities.Applications;
+import com.RiskManagement.entities.JwtResponse;
+import com.RiskManagement.entities.JwtResponseGetApplication;
+import com.RiskManagement.entities.User;
+@SpringBootTest
+class ServicesTest {
+	@Autowired 
+	private services serve ;
+	@MockBean
+	private ApplicationsRepo applirepo;
+	@MockBean
+	private UserRepository userrepo;
+	
+	
+
+	@Test
+	void addapplicationtest() {
+		Applications application = new Applications();
+		application.setCid(101);
+		application.setAmount(20000);
+		application.setCompanyvalue(82222);
+		application.setCreditvalue(8);
+		application.setEmailid("abs@xyz.com");
+		application.setName("abs");
+		application.setTurnover(3555);
+		
+		when(applirepo.save(application)).thenReturn(application);
+		assertEquals(application,serve.addapplication(application));
+		
+		
+	}
+	@Test
+	void getapplicationtest() {
+		JwtResponseGetApplication jwtresponse = new JwtResponseGetApplication();
+		Applications application = new Applications();
+		application.setCid(101);
+		application.setAmount(20000);
+		application.setCompanyvalue(82222);
+		application.setCreditvalue(8);
+		application.setEmailid("abs@xyz.com");
+		application.setName("abs");
+		application.setTurnover(3555);
+		jwtresponse.setAppli(application);
+		jwtresponse.setResult("success");
+		jwtresponse.setMessage("application exis");
+		serve.addapplication(application);
+		when(applirepo.existsById(101)).thenReturn(true);
+		when(applirepo.getById(101)).thenReturn(application);
+		JwtResponseGetApplication result = serve.getapplication(101);
+		assertEquals(jwtresponse.getResult(),result.getResult());
+		
+		
+	}
+	@Test
+	void loansenctionedtest() {
+		Applications application = new Applications();
+		application.setCid(101);
+		application.setAmount(200000);
+		application.setCompanyvalue(82222);
+		application.setCreditvalue(8);
+		application.setEmailid("abs@xyz.com");
+		application.setName("abs");
+		application.setTurnover(3555);
+		when(applirepo.getById(101)).thenReturn(application);
+		String result = "loan cannot be granted";
+		assertEquals(result,serve.loansenctioned(101, 200000));
+		
+				
+		
+		
+		
+	}
+	@Test
+	void changepassworddtest() {
+		JwtResponse jwtresponse = new JwtResponse();
+		User user = new User();
+		user.setId(101);
+		user.setEmail("abc@xyz.com");
+		user.setUserName("abc");
+		user.setPassword("hhh");
+		jwtresponse.setResult("success");
+		jwtresponse.setMessage("password changed successfully");
+		when(userrepo.findByUserName("abc")).thenReturn(user);
+		JwtResponse result = serve.changepassword("abc", "hhh", "kkk");
+		assertEquals(jwtresponse.getMessage(),result.getMessage());
+		
+		
+	}
+
+}

@@ -1,0 +1,43 @@
+package com.RiskManagement.controller;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+
+import com.RiskManagement.entities.Applications;
+import com.RiskManagement.entities.JwtResponse;
+
+import com.RiskManagement.services.services;
+@SpringBootTest
+class MycontrollerTest {
+	@Autowired
+	Mycontroller controller;
+    @Mock
+    services serve;
+    
+    
+	@Test
+	void addapplicationtest() {
+		JwtResponse jwtresponse = new JwtResponse();
+		Applications application = new Applications();
+		application.setCid(101);
+		application.setAmount(20000);
+		application.setCompanyvalue(82222);
+		application.setCreditvalue(8);
+		application.setEmailid("abs@xyz.com");
+		application.setName("abs");
+		application.setTurnover(3555);
+		
+		jwtresponse.setMessage("loan cannotbe granted");
+		ResponseEntity<JwtResponse> result =  controller.addapplication(application);
+		String String = result.getBody().getMessage();
+		assertEquals(jwtresponse.getMessage(),String);
+		
+	}
+
+}

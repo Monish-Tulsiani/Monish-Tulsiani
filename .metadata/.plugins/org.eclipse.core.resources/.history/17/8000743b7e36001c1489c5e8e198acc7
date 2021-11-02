@@ -1,0 +1,5 @@
+package com.RiskManagement.entities;
+
+public class EmailRequest {
+
+}

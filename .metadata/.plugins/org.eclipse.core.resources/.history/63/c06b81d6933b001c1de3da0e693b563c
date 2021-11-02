@@ -1,0 +1,26 @@
+package com.RiskManagement.util;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+@SpringBootTest
+class JwtUtilTest {
+	@Autowired
+	JwtUtil util ;
+	
+	
+
+	@Test
+	void extractUsernametest() {
+		boolean flag=true;
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhdGVjaGllIiwiZXhwIjoxNjM1ODYyMjQzLCJpYXQiOjE2MzU4MjYyNDN9.5uR6j5isjrYJWyNPCQ8cuHx6NFplvKGm7GUXfxt4PV0";
+		String username = util.extractUsername(token);
+		System.out.println(username);
+		assertEquals(true,flag);
+		
+		
+	}
+
+}
